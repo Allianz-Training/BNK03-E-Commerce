@@ -37,6 +37,9 @@ class Stock {
      * TODO  change this after ToString util finished.
      */
     getItems() {
+        this._stockItem.forEach((element) => {
+            console.log(element);
+        });
         return this._stockItem;
     }
     removeItem(item) {

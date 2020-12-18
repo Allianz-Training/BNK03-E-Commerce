@@ -58,10 +58,17 @@ class Customer {
         console.log("Enter 'BACK' to go to login page");
         console.log("Enter 'QUIT' to exit program\n");
         this.isExitMode = false;
+<<<<<<< HEAD
         const readline = require('readline');
         const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
+=======
+        const readline = require("readline");
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout,
+>>>>>>> 7055eaa23659faf45501e96f5f0d090835d140d8
         });
         // ask user for the input
         rl.question(``, (userInput) => {
@@ -88,8 +95,12 @@ class Customer {
         return this.manager.addItemToCart(name, amount);
     }
     remove(name) {
+<<<<<<< HEAD
         // return this.manager.removeItemFromCart(name);
         return "aa";
+=======
+        return this.manager.removeItemFromCart(name);
+>>>>>>> 7055eaa23659faf45501e96f5f0d090835d140d8
     }
     view() {
         return this.manager.getCartItems();

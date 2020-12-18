@@ -23,13 +23,23 @@ class Manager {
         }
         return `Error: Add ${name} to cart incompleted!, ${name} in stock not enough.`;
     }
-    //   public checkout(): string {
-    //     let cartItem: Array<Item> = this._shoppingCart.removeAllItem();
-    //     if (cartItem.length === 0) {
-    //       return "Cannot checkout, your cart is empty.";
-    //     }
-    //     let destination: string = "C:\\Users\\natthapongjie\\Desktop\\receipt.txt";
-    //   }
+    removeItemFromCart(name) {
+        let amount = this._shoppingCart.removeItem(name);
+        if (amount > 0) {
+            let item = new Item_1.Item(name, amount);
+            this._stock.addItem(item);
+            return `Success: Remove ${name} from cart completed!`;
+        }
+        return `Error: No ${name} in cart.`;
+    }
+    checkout() {
+        // let cartItem: Array<Item> = this._shoppingCart.removeAllItem();
+        // if (cartItem.length === 0) {
+        //   return "Cannot checkout, your cart is empty.";
+        // }
+        // let destination: string = "C:\\Users\\natthapongjie\\Desktop\\receipt.txt";
+        return "Can't checkout.";
+    }
     getCartItems() {
         return `${this._shoppingCart.getItems()}\n`;
     }

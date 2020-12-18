@@ -41,3 +41,6 @@ console.log("here");
 
 let m = new Main();
 m.main();
+
+let admin: Admin = new Admin();
+admin.run();
