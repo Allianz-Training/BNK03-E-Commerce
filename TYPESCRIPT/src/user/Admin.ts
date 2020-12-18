@@ -75,7 +75,7 @@ export class Admin implements User {
 
     if (splitInput[0] === Option.ADD) {
       try {
-        console.log(this.add(splitInput[1], parseInt(splitInput[2])));
+        console.log(this._add(splitInput[1], parseInt(splitInput[2])));
       } catch {
         console.log("Invalid input: please type in format as the instruction.");
       }
@@ -99,7 +99,7 @@ export class Admin implements User {
     }
   };
 
-  public add(name: string, amount: number): string {
+  private _add(name: string, amount: number): string {
     return this._manager.addItemToStock(name, amount);
   }
 

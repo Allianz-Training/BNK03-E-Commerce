@@ -2,21 +2,21 @@ import { Manager } from "../product/Manager";
 import { User } from "./IUser";
 
 enum Option {
-  ADD,
-  REMOVE,
-  VIEW,
-  BACK,
-  QUIT,
+  ADD = "add",
+  REMOVE = "remove",
+  VIEW = "view",
+  BACK = "back",
+  QUIT = "quit",
 }
 
 export class Customer implements User {
-  private manager: Manager = new Manager();
-  private isExitMode: boolean;
+  private _manager: Manager = new Manager();
+  private _isExitMode: boolean;
   constructor() {}
 
   run() {
     console.log("\nWelcome customer.\n");
-    console.log(this.manager.getStockItems() + "\n");
+    console.log(this._manager.getStockItems() + "\n");
     console.log("What do you want to do?\n");
     console.log("Enter 'ADD' <name> <amount> to add item to cart.");
     console.log("      example: ADD milk 4");
@@ -26,7 +26,7 @@ export class Customer implements User {
     console.log("Enter 'BACK' to go to login page");
     console.log("Enter 'QUIT' to exit program\n");
 
-    this.isExitMode = false;
+    this._isExitMode = false;
 
     const readline = require("readline");
 
@@ -36,13 +36,12 @@ export class Customer implements User {
     });
 
     // ask user for the input
-    rl.question(``, (userInput) => {
-      while (!this.isExitMode) {
-        let input: String = userInput.nextLine().trim().toUpperCase();
-        let splitInput = input.split(" ");
-        let isValidInput: Boolean = false;
+    let recursiveAsyncReadLine = () => {
+      rl.question("Type command here >> ", (input: string) => {
+        let splitInput: Array<string> = input.toUpperCase().split(" ");
+        let isValidInput: boolean = false;
         for (let o in Option) {
-          if (o.toLowerCase() == splitInput[0].toLowerCase()) {
+          if (Option[o] === splitInput[0].toLowerCase()) {
             isValidInput = true;
           }
         }
@@ -51,35 +50,51 @@ export class Customer implements User {
             "Error: Please enter 'ADD', 'REMOVE', 'VIEW', 'BACK' or 'QUIT' only.(can enter both lower case and upper case)"
           );
         } else {
-          this.modeSelector(splitInput, userInput);
+          this.modeSelector(splitInput, rl);
         }
-      }
-      rl.close();
-    });
+        if (!this._isExitMode) {
+          recursiveAsyncReadLine();
+        }
+      });
+    };
+    recursiveAsyncReadLine();
   }
+  private modeSelector = (splitInput: Array<string>, readline: any): void => {
+    splitInput[0] = splitInput[0].toLowerCase();
 
-  private modeSelector = (
-    splitInput: Array<string>,
-    userInput: Array<string>
-  ) => {
-    if (splitInput[0] === Option.ADD.toString()) {
+    if (splitInput[0] === Option.ADD || splitInput[0] === Option.REMOVE) {
+      if (splitInput[1] === undefined) {
+        console.log("Invalid input: please type in format as the instruction.");
+        return;
+      }
+      if (splitInput[0] === Option.REMOVE && splitInput[2] === undefined) {
+        console.log("Invalid input: please type in format as the instruction.");
+        return;
+      }
+      if (isNaN(parseInt(splitInput[2]))) {
+        console.log("Invalid input: please enter number as the instruction.");
+        return;
+      }
+    }
+
+    if (splitInput[0] === Option.ADD) {
       try {
-        console.log(this.add(splitInput[1], parseInt(splitInput[2])));
+        console.log(this._add(splitInput[1], parseInt(splitInput[2])));
       } catch {
         console.log("Invalid input: please type in format as the instruction.");
       }
-    } else if (splitInput[0] === Option.REMOVE.toString()) {
+    } else if (splitInput[0] === Option.REMOVE) {
       try {
-        console.log(this.remove(splitInput[1]));
+        console.log(this._remove(splitInput[1]));
       } catch {
         console.log("Invalid input: please type in format as the instruction.");
       }
-    } else if (splitInput[0] === Option.VIEW.toString()) {
-      console.log(this.view());
-    } else if (splitInput[0] === Option.BACK.toString()) {
+    } else if (splitInput[0] === Option.VIEW) {
+      console.log(this._view());
+    } else if (splitInput[0] === Option.BACK) {
       console.log("Back to home.");
-      this.isExitMode = true;
-    } else if (splitInput[0] === Option.QUIT.toString()) {
+      this._isExitMode = true;
+    } else if (splitInput[0] === Option.QUIT) {
       console.log("Quit program!");
       process.exit(0);
     } else {
@@ -87,15 +102,15 @@ export class Customer implements User {
     }
   };
 
-  public add(name: string, amount: number): string {
-    return this.manager.addItemToCart(name, amount);
+  private _add(name: string, amount: number): string {
+    return this._manager.addItemToCart(name, amount);
   }
 
-  private remove(name: string): string {
-    return this.manager.removeItemFromCart(name);
+  private _remove(name: string): string {
+    return this._manager.removeItemFromCart(name);
   }
 
-  private view(): string {
-    return this.manager.getCartItems();
+  private _view(): string {
+    return this._manager.getCartItems();
   }
 }

@@ -1,6 +1,6 @@
 import { Item } from "../product/Item";
 
-class ToString {
+export class ToString {
   private constructor() {}
 
   public static stockItemToString(stockItem: Map<number, Item>): string {

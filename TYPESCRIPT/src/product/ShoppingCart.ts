@@ -1,5 +1,6 @@
 import { IProduct } from "./IProduct";
 import { Item } from "./Item";
+import { ToString } from "../utility/ToString";
 
 export class ShoppingCart implements IProduct {
   private static _singleInstance = null;
@@ -18,11 +19,8 @@ export class ShoppingCart implements IProduct {
     this._cart.set(item.getName, item.getAmount);
   }
 
-  /**
-   * TODO  change this after ToString util finished.
-   */
-  public getItems(): any {
-    return this._cart;
+  public getItems(): string {
+    return ToString.cartItemToString(this._cart);
   }
 
   public removeItem(name: string): number {

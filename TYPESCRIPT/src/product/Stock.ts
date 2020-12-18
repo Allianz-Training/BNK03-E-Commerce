@@ -1,5 +1,6 @@
 import { IProduct } from "./IProduct";
 import { Item } from "./Item";
+import { ToString } from "../utility/ToString";
 
 export class Stock implements IProduct {
   private static _instance: Stock = null;
@@ -39,14 +40,8 @@ export class Stock implements IProduct {
     }
   }
 
-  /**
-   * TODO  change this after ToString util finished.
-   */
-  public getItems(): any {
-    this._stockItem.forEach((element) => {
-      console.log(element);
-    });
-    return this._stockItem;
+  public getItems(): string {
+    return ToString.stockItemToString(this._stockItem);
   }
 
   public removeItem(item: Item): boolean {
