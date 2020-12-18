@@ -1,41 +1,23 @@
-import { product } from "./product/Item";
+import { Item } from "../product/Item";
 
-class ToString{
-    
-    private _ToString():void{};
+class ToString {
+  private constructor() {}
 
-}
-
-    public stockItemToString(Map<Integer, Item> stockItem)
-{
-    // var person = { 
-    //     Integer();
-    //     Item();
-    //  }; 
-        let stringBuilder: any = new stringBuilder();
-        stringBuilder.append("{");
-        for (Map.Entry<Integer, Item> entry; stockItem.entrySet()) {
-           
-            stringBuilder.append("(id: " + entry.getKey() + ", " + entry.getValue().toString() + "),\n");
-       }
-       if(stringBuilder.length() > 1) {
-        stringBuilder.setLength(stringBuilder.length() - 2);
+  public static stockItemToString(stockItem: Map<number, Item>): string {
+    let stockItemString: string = "{";
+    for (let entry of stockItem) {
+      stockItemString += `(id: ${entry[0]}, ${entry[1]}),\n`;
     }
-    stringBuilder.append("}");
-    return stringBuilder.toString();
-}
+    stockItemString = `${stockItemString.slice(0, -2)}}`;
+    return stockItemString;
+  }
 
-public cartItemToString(Map<Integer, Item> stockItem)
-{
-    let stringBuilder: any = new stringBuilder();
-    stringBuilder.append("{");
-        for (Map.Entry<String, Integer> entry : cart.entrySet()) {
-            stringBuilder.append("(name: " + entry.getKey() + ", " + entry.getValue() + "),\n");
-        }
-        if (stringBuilder.length() > 1) {
-            stringBuilder.setLength(stringBuilder.length() - 2);
-        }
-        stringBuilder.append("}");
-        return stringBuilder.toString();
+  public static cartItemToString(cart: Map<string, number>): string {
+    let cartString: string = "{";
+    for (let entry of cart) {
+      cartString += `(name: ${entry[0]}, ${entry[1]}),\n`;
     }
-
+    cartString = `${cartString.slice(0, -2)}}`;
+    return cartString;
+  }
+}
