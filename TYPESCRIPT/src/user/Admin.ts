@@ -5,7 +5,7 @@ enum Option{
     ADD, REMOVE, VIEW, BACK, QUIT
 }
 
-class Admin implements User {
+export class Admin implements User {
     private manager: Manager = new Manager();
     private isExitMode: Boolean;
     constructor(){}

@@ -1,18 +1,18 @@
 import { Manager } from "../product/Manager";
 import { User } from "./IUser";
 
-enum Option{
+enum Option {
     ADD, REMOVE, VIEW, BACK, QUIT
 }
 
-class Customer implements User {
+export class Customer implements User {
     private manager: Manager = new Manager();
     private isExitMode: Boolean;
-    constructor(){}
-    
+    constructor() { }
 
-    run(){
-    
+
+    run() {
+
         console.log("\nWelcome customer.\n");
         console.log(this.manager.getStockItems() + "\n");
         console.log("What do you want to do?\n");
@@ -23,19 +23,19 @@ class Customer implements User {
         console.log("Enter 'VIEW' to see all items in cart.");
         console.log("Enter 'BACK' to go to login page");
         console.log("Enter 'QUIT' to exit program\n");
-    
+
         this.isExitMode = false;
-    
+
         const readline = require('readline');
-    
+
         const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
         });
-    
+
         // ask user for the input
         rl.question(``, (userInput) => {
-    
+
             while (!this.isExitMode) {
                 let input: String = userInput.nextLine().trim().toUpperCase();
                 let splitInput = input.split(" ");
@@ -55,42 +55,43 @@ class Customer implements User {
             rl.close();
         });
     }
-    
+
     private modeSelector = (splitInput: Array<string>, userInput: Array<string>) => {
         if (splitInput[0] === Option.ADD.toString()) {
             try {
                 console.log(this.add(splitInput[1], parseInt(splitInput[2])));
-            } catch{ 
+            } catch {
                 console.log("Invalid input: please type in format as the instruction.");
             }
-        } else if (splitInput[0]===Option.REMOVE.toString()) {
+        } else if (splitInput[0] === Option.REMOVE.toString()) {
             try {
                 console.log(this.remove(splitInput[1]));
-            } catch{
+            } catch {
                 console.log("Invalid input: please type in format as the instruction.");
             }
-        } else if (splitInput[0]===Option.VIEW.toString()) {
+        } else if (splitInput[0] === Option.VIEW.toString()) {
             console.log(this.view());
-        } else if (splitInput[0]===Option.BACK.toString()) {
+        } else if (splitInput[0] === Option.BACK.toString()) {
             console.log("Back to home.");
             this.isExitMode = true;
-        } else if (splitInput[0]===Option.QUIT.toString()) {
+        } else if (splitInput[0] === Option.QUIT.toString()) {
             console.log("Quit program!");
             process.exit(0);
         } else {
             console.log("Error");
         }
     }
-    
-    public add(name: string, amount:number):string{
+
+    public add(name: string, amount: number): string {
         return this.manager.addItemToCart(name, amount);
     }
-    
-    private remove(name:string):string {
-        return this.manager.removeItemFromCart(name);
+
+    private remove(name: string): string {
+        // return this.manager.removeItemFromCart(name);
+        return "aa";
     }
-    
-    private view():string {
+
+    private view(): string {
         return this.manager.getCartItems();
     }
 }
