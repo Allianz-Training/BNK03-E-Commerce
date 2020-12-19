@@ -14,7 +14,7 @@ export class Customer implements User {
   private _isExitMode: boolean;
   constructor() {}
 
-  run() {
+  run(rl: any) {
     console.log("\nWelcome customer.\n");
     console.log(this._manager.getStockItems() + "\n");
     console.log("What do you want to do?\n");
@@ -27,13 +27,6 @@ export class Customer implements User {
     console.log("Enter 'QUIT' to exit program\n");
 
     this._isExitMode = false;
-
-    const readline = require("readline");
-
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
 
     // ask user for the input
     let recursiveAsyncReadLine = () => {
@@ -55,6 +48,7 @@ export class Customer implements User {
         if (!this._isExitMode) {
           recursiveAsyncReadLine();
         }
+        console.log("snpt");
       });
     };
     recursiveAsyncReadLine();

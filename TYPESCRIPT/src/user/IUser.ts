@@ -1,3 +1,3 @@
 export interface User {
-    run(): void;
+  run(rl: any): void;
 }
